@@ -1,0 +1,81 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.appdynamics.cs</groupId>
+    <artifactId>connector-jv1</artifactId>
+    <version>1.0.1</version>
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.17.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.17.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jaxb-impl</artifactId>
+                    <groupId>com.sun.xml.bind</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.blazeds</groupId>
+            <artifactId>blazeds-core</artifactId>
+            <version>3.2.0.3978</version>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.blazeds</groupId>
+            <artifactId>blazeds-common</artifactId>
+            <version>3.2.0.3978</version>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.blazeds</groupId>
+            <artifactId>blazeds-remoting</artifactId>
+            <version>3.2.0.3978</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>install</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <target>
+                                <property environment="env"/>
+                                <fail unless="env.GITHUB_MVN_REPO_DIR">Please set the property "GITHUB_MVN_REPO_DIR"</fail>
+                                <property name="maven.repo.dir" value="${env.GITHUB_MVN_REPO_DIR}/releases/com/appdynamics/cs/${project.artifactId}/${project.version}"/>
+                                <mkdir dir="${maven.repo.dir}"/>
+                                <copy todir="${maven.repo.dir}">
+                                    <fileset dir="target" includes="${project.artifactId}-${project.version}.jar"/>
+                                </copy>
+                                <copy tofile="${maven.repo.dir}/${project.artifactId}-${project.version}.pom" file="pom.xml"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
