@@ -3,10 +3,9 @@
   <groupId>com.appdynamics</groupId>
   <artifactId>appd-exts-commons</artifactId>
   <versioning>
-    <release>2.2.17</release>
     <versions>
-      <version>2.2.17</version>
+      <version>2.2.18-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20250827191954</lastUpdated>
+    <lastUpdated>20250919173134</lastUpdated>
   </versioning>
 </metadata>
